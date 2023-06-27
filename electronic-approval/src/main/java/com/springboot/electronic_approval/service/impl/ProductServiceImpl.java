@@ -1,8 +1,8 @@
-package com.springboot.electronic_approval.service.impl;
+/*package com.springboot.electronic_approval.service.impl;
 
 import com.springboot.electronic_approval.data.dto.ProductDto;
 import com.springboot.electronic_approval.data.dto.ProductResponseDto;
-import com.springboot.electronic_approval.data.entity.Product;
+import com.springboot.electronic_approval.data.entity.User;
 import com.springboot.electronic_approval.data.repository.ProductRepository;
 import com.springboot.electronic_approval.service.ProductService;
 import org.slf4j.Logger;
@@ -24,15 +24,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto getProduct(Long number) {
         LOGGER.info("[getProduct] input number : {}", number);
-        Product product = productRepository.findById(number).get();
+        User user = productRepository.findById(number).get();
 
-        LOGGER.info("[getProduct] product number : {}, name : {}", product.getNumber(),
-                product.getName());
+        LOGGER.info("[getProduct] product number : {}, name : {}", user.getNumber(),
+                user.getName());
         ProductResponseDto productResponseDto = new ProductResponseDto();
-        productResponseDto.setNumber(product.getNumber());
-        productResponseDto.setName(product.getName());
-        productResponseDto.setPrice(product.getPrice());
-        productResponseDto.setStock(product.getStock());
+        productResponseDto.setNumber(user.getNumber());
+        productResponseDto.setName(user.getName());
+        productResponseDto.setPrice(user.getPrice());
+        productResponseDto.setStock(user.getStock());
 
         return productResponseDto;
     }
@@ -40,34 +40,34 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto saveProduct(ProductDto productDto) {
         LOGGER.info("[saveProduct] productDTO : {}", productDto.toString());
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setStock(productDto.getStock());
+        User user = new User();
+        user.setName(productDto.getName());
+        user.setPrice(productDto.getPrice());
+        user.setStock(productDto.getStock());
 
-        Product savedProduct = productRepository.save(product);
-        LOGGER.info("[saveProduct] savedProduct : {}", savedProduct);
+        User savedUser = productRepository.save(user);
+        LOGGER.info("[saveProduct] savedProduct : {}", savedUser);
 
         ProductResponseDto productResponseDto = new ProductResponseDto();
-        productResponseDto.setNumber(savedProduct.getNumber());
-        productResponseDto.setName(savedProduct.getName());
-        productResponseDto.setPrice(savedProduct.getPrice());
-        productResponseDto.setStock(savedProduct.getStock());
+        productResponseDto.setNumber(savedUser.getNumber());
+        productResponseDto.setName(savedUser.getName());
+        productResponseDto.setPrice(savedUser.getPrice());
+        productResponseDto.setStock(savedUser.getStock());
 
         return productResponseDto;
     }
 
     @Override
     public ProductResponseDto changeProductName(Long number, String name) {
-        Product foundProduct = productRepository.findById(number).get();
-        foundProduct.setName(name);
-        Product changedProduct = productRepository.save(foundProduct);
+        User foundUser = productRepository.findById(number).get();
+        foundUser.setName(name);
+        User changedUser = productRepository.save(foundUser);
 
         ProductResponseDto productResponseDto = new ProductResponseDto();
-        productResponseDto.setNumber(changedProduct.getNumber());
-        productResponseDto.setName(changedProduct.getName());
-        productResponseDto.setPrice(changedProduct.getPrice());
-        productResponseDto.setStock(changedProduct.getStock());
+        productResponseDto.setNumber(changedUser.getNumber());
+        productResponseDto.setName(changedUser.getName());
+        productResponseDto.setPrice(changedUser.getPrice());
+        productResponseDto.setStock(changedUser.getStock());
 
         return productResponseDto;
     }
@@ -77,3 +77,4 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(number);
     }
 }
+*/

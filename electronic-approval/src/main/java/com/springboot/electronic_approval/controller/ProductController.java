@@ -1,6 +1,6 @@
 package com.springboot.electronic_approval.controller;
 
-import com.springboot.electronic_approval.data.dto.ChangeProductNameDto;
+/*import com.springboot.electronic_approval.data.dto.ChangeProductNameDto;
 import com.springboot.electronic_approval.data.dto.ProductDto;
 import com.springboot.electronic_approval.data.dto.ProductResponseDto;
 import com.springboot.electronic_approval.service.ProductService;
@@ -62,3 +62,4 @@ public class ProductController {
     }
 
 }
+*/
