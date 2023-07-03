@@ -20,15 +20,15 @@ class UserRepositoryTest {
     @Test
     public void userTest() {
         Team team= new Team();
-        team.setId(3);
-        team.setName("인사부");
+        team.setId(2);
+        team.setName("마케팅부");
 
         Position position = new Position();
         position.setId(2);
         position.setName("주임");
 
         User user = new User();
-        user.setName("김남길");
+        user.setName("코코");
         user.setEmail("test@naver.com");
         user.setPw("1234");
         user.setTeam(team);

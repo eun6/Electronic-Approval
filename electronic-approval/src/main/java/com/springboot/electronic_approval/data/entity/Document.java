@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
+//@ToString(callSuper = true)
 //@EqualsAndHashCode(callSuper = true)
 @Table(name = "document")
 public class Document {
@@ -24,7 +24,7 @@ public class Document {
     private int id;
 
     @Column(nullable = false, name = "document_title")
-    private String name;
+    private String title;
 
     @Column(nullable = false, name = "document_content")
     private String content;
@@ -41,11 +41,11 @@ public class Document {
     private String deadline;
 
     //FK 가지고 있는 쪽이 부모가 되는 듯.
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Drafter_id")
     private User Drafter;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Executor_id")
     private User Executor;
 }
