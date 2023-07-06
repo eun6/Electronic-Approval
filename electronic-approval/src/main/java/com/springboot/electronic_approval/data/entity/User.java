@@ -3,6 +3,8 @@ package com.springboot.electronic_approval.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,4 +36,12 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
+
+    /*@OneToMany(mappedBy = "Drafter", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Document> drafter = new ArrayList<>();
+
+    @OneToMany(mappedBy = "Executor", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Document> executor = new ArrayList<>();*/
 }

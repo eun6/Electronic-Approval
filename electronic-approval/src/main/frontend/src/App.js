@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+import './App.css'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from "./pages/Home";
+import Read from "./pages/Read";
+import Write from "./pages/Write";
 
 function App() {
-  const [hello, setHello] = useState('')
-
-  useEffect(() => {
-    axios.get('/api/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-  }, []);
-
   return (
       <div>
-        백엔드에서 가져온 데이터입니다 : {hello}
+          <BrowserRouter>
+              <Routes>
+                  <Route path={"/"} element={<Home />}></Route>
+                  <Route path={"/document/get"} element={<Read />}></Route>
+                  <Route path={"/document/post"} element={<Write />}></Route>
+              </Routes>
+          </BrowserRouter>
       </div>
   );
 }
-
 export default App;

@@ -2,6 +2,7 @@ package com.springboot.electronic_approval.service.impl;
 
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentRequest;
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentResponse;
+import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentResponseList;
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentUpdate;
 import com.springboot.electronic_approval.data.entity.Document;
 import com.springboot.electronic_approval.data.entity.User;
@@ -11,6 +12,9 @@ import com.springboot.electronic_approval.service.DocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -22,6 +26,25 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentServiceImpl(DocumentRepository documentRepository, UserRepository userRepository) {
         this.documentRepository = documentRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public List<DocumentResponseList> getAllDocument() {
+        List<Document> document = documentRepository.findAll();
+        List<DocumentResponseList> responseListDto = new ArrayList<>();
+        for(int i=0; i< document.size(); i++) {
+            DocumentResponseList documentResponseList = DocumentResponseList.builder()
+                    .id(document.get(i).getId())
+                    .title(document.get(i).getTitle())
+                    .date(document.get(i).getDate())
+                    .deadline(document.get(i).getDeadline())
+                    .drafter(document.get(i).getDrafter().getName())
+                    .executor(document.get(i).getExecutor().getName())
+                    .build();
+            responseListDto.add(documentResponseList);
+        }
+
+        return responseListDto;
     }
 
     @Override
@@ -37,8 +60,8 @@ public class DocumentServiceImpl implements DocumentService {
                 .attachment(document.getAttachment())
                 .date(document.getDate())
                 .deadline(document.getDeadline())
-                .drafterId(document.getDrafter().getId())
-                .executorId(document.getExecutor().getId())
+                .drafter(document.getDrafter().getName())
+                .executor(document.getExecutor().getName())
                 .build();
         return documentResponseDto;
     }
@@ -68,8 +91,8 @@ public class DocumentServiceImpl implements DocumentService {
                 .title(savedDocument.getTitle())
                 .content(savedDocument.getContent())
                 .attachment(savedDocument.getAttachment())
-                .drafterId(savedDocument.getDrafter().getId())
-                .executorId(savedDocument.getExecutor().getId())
+                .drafter(savedDocument.getDrafter().getName())
+                .executor(savedDocument.getExecutor().getName())
                 .date(savedDocument.getDate())
                 .deadline(savedDocument.getDeadline())
                 .build();
@@ -102,8 +125,8 @@ public class DocumentServiceImpl implements DocumentService {
                 .attachment(changedDocument.getAttachment())
                 .date(changedDocument.getDate())
                 .deadline(changedDocument.getDeadline())
-                .drafterId(changedDocument.getDrafter().getId())
-                .executorId(changedDocument.getExecutor().getId())
+                .drafter(changedDocument.getDrafter().getName())
+                .executor(changedDocument.getExecutor().getName())
                 .build();
 
         return documentResponseDto;
