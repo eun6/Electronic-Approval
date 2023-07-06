@@ -2,6 +2,7 @@ package com.springboot.electronic_approval.service.impl;
 
 import com.springboot.electronic_approval.data.dto.UserDto.UserRequest;
 import com.springboot.electronic_approval.data.dto.UserDto.UserResponse;
+import com.springboot.electronic_approval.data.dto.UserDto.UserUpdate;
 import com.springboot.electronic_approval.data.entity.Position;
 import com.springboot.electronic_approval.data.entity.Team;
 import com.springboot.electronic_approval.data.entity.User;
@@ -78,10 +79,33 @@ public class UserServiceImpl implements UserService {
         return userResponseDto;
     }
 
-    //어떤 항목을 수정 가능하게 할지 미정 -> 추후 코드 작성
     @Override
-    public UserResponse changeUserInfo(String email, String name) throws Exception {
-        return null;
+    public UserResponse changeUserInfo(int id, UserUpdate userUpdate) throws Exception {
+        //노예인 team과 position 먼저 가져옴.
+        Team team = teamRepository.getById(userUpdate.getTeamId());
+        Position position = positionRepository.getById(userUpdate.getPositionId());
+
+        //클라이언트에서 요청한 id에 부합한 user를 찾음
+        User user = userRepository.findById(id).get();
+        //id와 email 항목 제외 변경가능하도록 함.
+        user.setId(id);
+        user.setEmail(user.getEmail());
+        user.setName(userUpdate.getName());
+        user.setPw(userUpdate.getPw());
+        user.setTeam(team);
+        user.setPosition(position);
+
+        User changedUser = userRepository.save(user);
+        UserResponse userResponseDto = UserResponse.builder()
+                .id(changedUser.getId())
+                .email(changedUser.getEmail())
+                .name(changedUser.getName())
+                .pw(changedUser.getPw())
+                .teamId(changedUser.getTeam().getId())
+                .positionId(changedUser.getPosition().getId())
+                .build();
+
+        return userResponseDto;
     }
 
     //정상 삭제되는 것까지는 확인

@@ -2,6 +2,7 @@ package com.springboot.electronic_approval.service.impl;
 
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentRequest;
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentResponse;
+import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentUpdate;
 import com.springboot.electronic_approval.data.entity.Document;
 import com.springboot.electronic_approval.data.entity.User;
 import com.springboot.electronic_approval.data.repository.DocumentRepository;
@@ -78,8 +79,34 @@ public class DocumentServiceImpl implements DocumentService {
 
     //어떤 항목을 수정 가능하게 할지 미정 -> 추후 코드 작성
     @Override
-    public DocumentResponse changeDocument(int id) throws Exception {
-        return null;
+    public DocumentResponse changeDocument(int id, DocumentUpdate documentUpdate) throws Exception {
+        //노예 drafter, executor 불러오기
+        User drafter = userRepository.getById(documentUpdate.getDrafterId());
+        User executor = userRepository.getById(documentUpdate.getExecutorId());
+        
+        //클라이언트에서 보낸 id와 일치하는 문서 찾기
+        Document document = documentRepository.findById(id).get();
+        document.setId(id);
+        document.setTitle(documentUpdate.getTitle());
+        document.setContent(documentUpdate.getContent());
+        document.setAttachment(documentUpdate.getAttachment());
+        document.setDeadline(documentUpdate.getDeadline());
+        document.setDrafter(drafter);
+        document.setExecutor(executor);
+
+        Document changedDocument = documentRepository.save(document);
+        DocumentResponse documentResponseDto = DocumentResponse.builder()
+                .id(changedDocument.getId())
+                .title(changedDocument.getTitle())
+                .content(changedDocument.getContent())
+                .attachment(changedDocument.getAttachment())
+                .date(changedDocument.getDate())
+                .deadline(changedDocument.getDeadline())
+                .drafterId(changedDocument.getDrafter().getId())
+                .executorId(changedDocument.getExecutor().getId())
+                .build();
+
+        return documentResponseDto;
     }
 
     @Override

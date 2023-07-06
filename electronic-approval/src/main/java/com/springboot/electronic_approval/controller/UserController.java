@@ -2,6 +2,7 @@ package com.springboot.electronic_approval.controller;
 
 import com.springboot.electronic_approval.data.dto.UserDto.UserResponse;
 import com.springboot.electronic_approval.data.dto.UserDto.UserRequest;
+import com.springboot.electronic_approval.data.dto.UserDto.UserUpdate;
 import com.springboot.electronic_approval.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
-    @PatchMapping("/patch")
-    public ResponseEntity<UserResponse> changeUserInfo(@RequestBody UserRequest userRequest) throws Exception {
-        UserResponse userResponseDto = userService.changeUserInfo(userRequest.getEmail(), userRequest.getName());
+    @PatchMapping("/patch/{id}")
+    public ResponseEntity<UserResponse> changeUserInfo(@PathVariable int id, @RequestBody UserUpdate userUpdate) throws Exception {
+        UserResponse userResponseDto = userService.changeUserInfo(id, userUpdate);
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
     @DeleteMapping("/delete")

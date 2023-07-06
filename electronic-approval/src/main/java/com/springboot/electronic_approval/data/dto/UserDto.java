@@ -30,4 +30,14 @@ public class UserDto {
        private int teamId;
        private int positionId;
    }
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UserUpdate {
+        private String name;
+        private String pw;
+        private int teamId;
+        private int positionId;
+    }
 }

@@ -34,4 +34,16 @@ public class DocumentDto {
         private int drafterId;
         private int executorId;
     }
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class DocumentUpdate {
+        private String title;
+        private String content;
+        private String attachment;
+        private String deadline;
+        private int drafterId;
+        private int executorId;
+    }
 }

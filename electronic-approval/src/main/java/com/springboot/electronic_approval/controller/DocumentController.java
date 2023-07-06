@@ -2,6 +2,7 @@ package com.springboot.electronic_approval.controller;
 
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentRequest;
 import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentResponse;
+import com.springboot.electronic_approval.data.dto.DocumentDto.DocumentUpdate;
 import com.springboot.electronic_approval.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,9 @@ public class DocumentController {
         return ResponseEntity.status(HttpStatus.OK).body(documentResponseDto);
     }
 
-    @PatchMapping("/patch")
-    public ResponseEntity<DocumentResponse> changeDocument(@RequestBody DocumentRequest documentRequest) throws Exception {
-        DocumentResponse documentResponseDto = documentService.changeDocument(documentRequest.getDrafterId());
+    @PatchMapping("/patch/{id}")
+    public ResponseEntity<DocumentResponse> changeDocument(@PathVariable int id, @RequestBody DocumentUpdate documentUpdate) throws Exception {
+        DocumentResponse documentResponseDto = documentService.changeDocument(id, documentUpdate);
         return ResponseEntity.status(HttpStatus.OK).body(documentResponseDto);
     }
 
